@@ -169,6 +169,73 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── HAMBURGER ── */
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s,opacity .2s}
+.nav-ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-drawer{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(216,222,240,0.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:8px 24px 20px;flex-direction:column;z-index:199}
+.nav-drawer.open{display:flex}
+.nav-drawer a{font-size:0.9rem;color:var(--text2);text-decoration:none;font-weight:500;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;letter-spacing:-0.01em;transition:color .2s}
+.nav-drawer a:hover{color:var(--blue)}
+.nav-drawer-cta{margin-top:14px;background:var(--blue);color:#fff;border:none;padding:13px;border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;width:100%;letter-spacing:-0.01em;transition:opacity .2s}
+.nav-drawer-cta:hover{opacity:.88}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:14px 28px}
+  .nav-links,.nav-cta{display:none}
+  .nav-ham{display:flex}
+  .ticker{margin-top:57px}
+
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(3){border-top:1px solid var(--border)}
+  .stat:nth-child(4){border-top:1px solid var(--border)}
+
+  .wrap{padding:60px 28px}
+  .bg-white{padding:60px 0}
+  .bg-inner{padding:0 28px}
+  .wl-inner{padding:0 28px}
+
+  .two-sided{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .roadmap-grid{grid-template-columns:1fr}
+  .wl-grid{grid-template-columns:1fr;gap:40px}
+  footer{padding:28px 28px;flex-wrap:wrap;gap:10px}
+}
+
+@media(max-width:600px){
+  nav{padding:14px 20px}
+  .ticker{margin-top:53px}
+
+  .hero{padding:76px 20px 56px}
+  .hero h1{font-size:clamp(1.9rem,8vw,2.8rem)}
+  .hero-sub{font-size:0.93rem}
+  .btns{flex-direction:column;align-items:stretch}
+  .btn-p,.btn-s{text-align:center}
+
+  .stat{padding:20px 10px}
+  .stat-n{font-size:1.6rem}
+
+  .wrap{padding:48px 20px}
+  .bg-white{padding:48px 0}
+  .bg-inner{padding:0 20px}
+  .wl-section{padding:48px 0}
+  .wl-inner{padding:0 20px}
+
+  .side{padding:30px 22px}
+  .steps{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+
+  .sec-title{margin-bottom:24px}
+  footer{flex-direction:column;text-align:center;padding:24px 20px;gap:8px}
+  .nav-drawer{top:53px}
+}
 </style>
 </head>
 <body>
@@ -182,7 +249,17 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
     <a onclick="goTo('waitlist')">Waitlist</a>
   </div>
   <button class="nav-cta" onclick="goTo('waitlist')">Join Waitlist</button>
+  <button class="nav-ham" id="nav-ham" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="nav-drawer">
+  <a onclick="goTo('value');closeNav()">Platform</a>
+  <a onclick="goTo('how');closeNav()">How it works</a>
+  <a onclick="goTo('roadmap');closeNav()">Roadmap</a>
+  <a onclick="goTo('waitlist');closeNav()">Waitlist</a>
+  <button class="nav-drawer-cta" onclick="goTo('waitlist');closeNav()">Join Waitlist</button>
+</div>
 
 <div class="ticker">
   <div class="ticker-inner" id="ticker"></div>
@@ -339,6 +416,16 @@ function goTo(id) {
 }
 function setType(val) {
   setTimeout(() => { document.getElementById('f-type').value = val; }, 400);
+}
+function toggleNav() {
+  const ham = document.getElementById('nav-ham');
+  const drawer = document.getElementById('nav-drawer');
+  ham.classList.toggle('open');
+  drawer.classList.toggle('open');
+}
+function closeNav() {
+  document.getElementById('nav-ham').classList.remove('open');
+  document.getElementById('nav-drawer').classList.remove('open');
 }
 
 // ── Ticker ───────────────────────────────────────────────────────────────────
