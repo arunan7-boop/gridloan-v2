@@ -8,19 +8,19 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F4F6FB;--bg2:#ECEFF7;--bg3:#FFFFFF;
+  --bg:#DDE2EF;--bg2:#D2D8E9;--bg3:#E8ECFA;
   --navy:#0F1C3F;--navy2:#1A2E5A;
-  --blue:#0066FF;--blue-l:rgba(0,102,255,0.1);--blue-ll:rgba(0,102,255,0.06);
+  --blue:#0066FF;--blue-l:rgba(0,102,255,0.12);--blue-ll:rgba(0,102,255,0.08);
   --purple:#6C5CE7;
-  --text:#0F1C3F;--text2:#4A5578;--text3:#8892AA;
-  --card:#FFFFFF;--border:rgba(15,28,63,0.1);--border2:rgba(0,102,255,0.2);
+  --text:#0F1C3F;--text2:#4A5578;--text3:#7A849E;
+  --card:#EAEEFC;--border:rgba(15,28,63,0.13);--border2:rgba(0,102,255,0.22);
   --err:#E53E5A;--cyan:#00C2FF;
 }
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(255,255,255,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(220,226,242,0.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.04em;color:var(--navy);cursor:pointer}
 .logo span{color:var(--blue)}
 .nav-links{display:flex;gap:28px}
@@ -48,14 +48,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 .btn-p{background:var(--blue);color:#fff;border:none;padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;cursor:pointer;transition:opacity .2s;letter-spacing:-0.01em}
 .btn-p:hover{opacity:.88}
-.btn-s{background:#fff;color:var(--navy);border:1px solid var(--border);padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.93rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:-0.01em}
+.btn-s{background:var(--bg3);color:var(--navy);border:1px solid var(--border);padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.93rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:-0.01em}
 .btn-s:hover{border-color:var(--blue);color:var(--blue)}
 .scroll-hint{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.05em;animation:bounceY 2s infinite;position:relative;z-index:1}
 @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 .scroll-hint svg{width:12px;height:12px;stroke:var(--text3);fill:none;stroke-width:1.5;stroke-linecap:round}
 
 /* ── STATS ── */
-.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .stat{padding:26px 16px;text-align:center;border-right:1px solid var(--border);cursor:pointer;transition:background .2s}
 .stat:hover{background:var(--blue-ll)}
 .stat:last-child{border-right:none}
@@ -64,7 +64,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* ── SECTIONS ── */
 .wrap{padding:80px 60px;max-width:1200px;margin:0 auto}
-.bg-white{background:#fff;padding:80px 0}
+.bg-white{background:var(--card);padding:80px 0}
 .bg-inner{max-width:1200px;margin:0 auto;padding:0 60px}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:500}
 .sec-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.035em;line-height:1.12;margin-bottom:32px;color:var(--navy)}
@@ -129,18 +129,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .count-badge strong{color:var(--blue);font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:800}
 
 /* ── FORM ── */
-.form-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:34px 30px}
+.form-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:34px 30px}
 .form-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;margin-bottom:22px;color:var(--navy);letter-spacing:-0.02em}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .fg label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);font-weight:500;letter-spacing:0.09em;text-transform:uppercase}
-.fg input,.fg select{background:#F8F9FC;border:1px solid var(--border);border-radius:7px;padding:12px 14px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color .2s,background .2s;font-weight:400}
-.fg input:focus,.fg select:focus{border-color:var(--blue);background:#fff}
+.fg input,.fg select{background:#D5DBF0;border:1px solid var(--border);border-radius:7px;padding:12px 14px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color .2s,background .2s;font-weight:400}
+.fg input:focus,.fg select:focus{border-color:var(--blue);background:var(--bg3)}
 .fg input::placeholder{color:var(--text3)}
-.fg select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238892AA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;background-color:#F8F9FC}
+.fg select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238892AA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;background-color:#D5DBF0}
 .fg select option{background:#fff;color:var(--navy)}
 .cb{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px;cursor:pointer}
-.cb input[type=checkbox]{width:17px;height:17px;min-width:17px;border:1.5px solid var(--border);border-radius:4px;background:#F8F9FC;appearance:none;-webkit-appearance:none;display:grid;place-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;transition:all .15s}
+.cb input[type=checkbox]{width:17px;height:17px;min-width:17px;border:1.5px solid var(--border);border-radius:4px;background:#D5DBF0;appearance:none;-webkit-appearance:none;display:grid;place-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;transition:all .15s}
 .cb input:checked{background:var(--blue);border-color:var(--blue)}
 .cb input:checked::after{content:'';width:4px;height:8px;border:1.5px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
 .cb span{font-size:0.84rem;color:var(--text2);line-height:1.6}
@@ -161,7 +161,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .success-meta strong{color:var(--navy)}
 
 /* ── FOOTER ── */
-footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fff}
+footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--card)}
 .foot-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:var(--text2);letter-spacing:-0.03em;cursor:pointer}
 .foot-logo span{color:var(--blue)}
 .foot-p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.04em}
@@ -333,8 +333,7 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 
 <script>
 // ── CONFIG — update to your Railway URL before deploying ────────────────────
-// public/index.html — find this line and update it
-const API_BASE = 'https://gridloan-v2-production.up.railway.app/api';
+const API_BASE = '/api';
 function goTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
