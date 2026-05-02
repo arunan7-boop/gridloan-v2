@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Gridloan.ai — Decentralised Compute Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F4F6FB;--bg2:#ECEFF7;--bg3:#FFFFFF;
+  --navy:#0F1C3F;--navy2:#1A2E5A;
+  --blue:#0066FF;--blue-l:rgba(0,102,255,0.1);--blue-ll:rgba(0,102,255,0.06);
+  --purple:#6C5CE7;
+  --text:#0F1C3F;--text2:#4A5578;--text3:#8892AA;
+  --card:#FFFFFF;--border:rgba(15,28,63,0.1);--border2:rgba(0,102,255,0.2);
+  --err:#E53E5A;--cyan:#00C2FF;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(255,255,255,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.04em;color:var(--navy);cursor:pointer}
+.logo span{color:var(--blue)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:0.84rem;color:var(--text2);text-decoration:none;font-weight:500;cursor:pointer;transition:color .2s;letter-spacing:-0.01em}
+.nav-links a:hover{color:var(--blue)}
+.nav-cta{background:var(--blue);color:#fff;border:none;padding:10px 22px;border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.84rem;cursor:pointer;transition:opacity .2s;letter-spacing:-0.01em}
+.nav-cta:hover{opacity:.88}
+
+/* ── TICKER ── */
+.ticker{background:var(--navy);padding:9px 0;overflow:hidden;white-space:nowrap;position:relative;z-index:1;margin-top:65px}
+.ticker-inner{display:inline-flex;gap:48px;animation:ticker 26s linear infinite}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{font-family:'JetBrains Mono',monospace;font-size:0.67rem;color:rgba(255,255,255,0.45);letter-spacing:0.07em;flex-shrink:0}
+.tick-item span{color:var(--cyan);margin-right:4px}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 40px 80px;position:relative;overflow:hidden;background:var(--bg)}
+.hero-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,102,255,0.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,102,255,0.035) 1px,transparent 1px);background-size:44px 44px;mask-image:radial-gradient(ellipse 85% 70% at 50% 35%,black 30%,transparent 75%);z-index:0}
+.badge{display:inline-flex;align-items:center;gap:8px;background:var(--blue-ll);border:1px solid var(--border2);border-radius:100px;padding:5px 16px;margin-bottom:24px;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--blue);font-weight:500;letter-spacing:0.05em;position:relative;z-index:1}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--blue);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.4)}}
+.hero h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(2.2rem,5vw,4.4rem);font-weight:800;line-height:1.06;letter-spacing:-0.04em;max-width:800px;position:relative;z-index:1;margin-bottom:20px;color:var(--navy)}
+.hero h1 em{font-style:normal;color:var(--blue)}
+.hero-sub{color:var(--text2);font-size:1rem;max-width:500px;line-height:1.75;font-weight:400;position:relative;z-index:1;margin-bottom:34px}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+.btn-p{background:var(--blue);color:#fff;border:none;padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;cursor:pointer;transition:opacity .2s;letter-spacing:-0.01em}
+.btn-p:hover{opacity:.88}
+.btn-s{background:#fff;color:var(--navy);border:1px solid var(--border);padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.93rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:-0.01em}
+.btn-s:hover{border-color:var(--blue);color:var(--blue)}
+.scroll-hint{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.05em;animation:bounceY 2s infinite;position:relative;z-index:1}
+@keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.scroll-hint svg{width:12px;height:12px;stroke:var(--text3);fill:none;stroke-width:1.5;stroke-linecap:round}
+
+/* ── STATS ── */
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stat{padding:26px 16px;text-align:center;border-right:1px solid var(--border);cursor:pointer;transition:background .2s}
+.stat:hover{background:var(--blue-ll)}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Plus Jakarta Sans',sans-serif;font-size:2rem;font-weight:800;color:var(--blue);line-height:1;letter-spacing:-0.04em}
+.stat-l{font-size:0.72rem;color:var(--text3);margin-top:6px;font-weight:500}
+
+/* ── SECTIONS ── */
+.wrap{padding:80px 60px;max-width:1200px;margin:0 auto}
+.bg-white{background:#fff;padding:80px 0}
+.bg-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:500}
+.sec-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.035em;line-height:1.12;margin-bottom:32px;color:var(--navy)}
+.sec-title em{font-style:normal;color:var(--blue)}
+
+/* ── TWO SIDED ── */
+.two-sided{display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.side{background:var(--card);padding:44px 36px;position:relative}
+.side::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.side.own::before{background:var(--blue)}
+.side.bld::before{background:linear-gradient(90deg,var(--blue),var(--purple))}
+.side-tag{font-family:'JetBrains Mono',monospace;font-size:0.63rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:500}
+.side h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.1rem;font-weight:700;letter-spacing:-0.025em;margin-bottom:14px;line-height:1.3;color:var(--navy)}
+.side p{color:var(--text2);font-size:0.87rem;line-height:1.72;margin-bottom:22px}
+.blist{list-style:none;display:flex;flex-direction:column;gap:10px}
+.blist li{display:flex;align-items:flex-start;gap:10px;font-size:0.85rem;color:var(--text)}
+.arr{color:var(--blue);font-weight:700;flex-shrink:0;margin-top:1px}
+.side-cta{display:inline-flex;align-items:center;gap:8px;margin-top:22px;background:var(--blue-ll);color:var(--blue);border:1px solid var(--border2);padding:10px 20px;border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;transition:background .2s;letter-spacing:-0.01em}
+.side-cta:hover{background:var(--blue-l)}
+
+/* ── STEPS ── */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:32px;background:var(--border);border-radius:12px;overflow:hidden;border:1px solid var(--border)}
+.step{background:var(--card);padding:30px 24px}
+.step-n{font-family:'JetBrains Mono',monospace;font-size:1.6rem;font-weight:500;color:rgba(0,102,255,0.18);line-height:1;margin-bottom:12px}
+.step h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.9rem;font-weight:700;margin-bottom:8px;color:var(--navy);letter-spacing:-0.02em}
+.step p{font-size:0.8rem;color:var(--text2);line-height:1.65}
+
+/* ── WHY ── */
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.why-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px 22px;transition:border-color .2s,background .2s}
+.why-card:hover{border-color:var(--border2);background:var(--blue-ll)}
+.why-icon{width:38px;height:38px;border-radius:8px;background:var(--blue-ll);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;margin-bottom:14px}
+.why-icon svg{width:15px;height:15px;stroke:var(--blue);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.why-card h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;font-weight:700;margin-bottom:8px;color:var(--navy);letter-spacing:-0.02em}
+.why-card p{font-size:0.79rem;color:var(--text2);line-height:1.62}
+
+/* ── ROADMAP ── */
+.roadmap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:32px}
+.phase{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:26px 22px}
+.phase-tag{display:inline-block;padding:3px 11px;border-radius:100px;font-family:'JetBrains Mono',monospace;font-size:0.6rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px}
+.phase:nth-child(1) .phase-tag{background:var(--blue-ll);color:var(--blue);border:1px solid var(--border2)}
+.phase:nth-child(2) .phase-tag{background:rgba(108,92,231,0.08);color:var(--purple);border:1px solid rgba(108,92,231,0.2)}
+.phase:nth-child(3) .phase-tag{background:rgba(15,28,63,0.05);color:var(--text3);border:1px solid var(--border)}
+.phase-month{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);margin-bottom:12px;letter-spacing:0.04em}
+.phase h4{font-family:'Plus Jakarta Sans',sans-serif;font-size:0.97rem;font-weight:700;margin-bottom:12px;color:var(--navy);letter-spacing:-0.02em}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+.phase ul li{font-size:0.8rem;color:var(--text2);padding-left:14px;position:relative;line-height:1.5}
+.phase ul li::before{content:'·';position:absolute;left:0;color:var(--blue);font-size:1.1rem;line-height:1.2}
+.milestone{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:0.61rem;color:var(--blue);letter-spacing:0.04em}
+.roadmap-cta{display:flex;justify-content:center;margin-top:30px}
+
+/* ── WAITLIST ── */
+.wl-section{background:var(--bg);border-top:1px solid var(--border);padding:80px 0}
+.wl-inner{max-width:1200px;margin:0 auto;padding:0 60px}
+.wl-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:64px;align-items:start;margin-top:36px}
+.wl-info h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:14px;letter-spacing:-0.03em;line-height:1.28;color:var(--navy)}
+.wl-info p{color:var(--text2);font-size:0.88rem;line-height:1.72;margin-bottom:24px}
+.wl-perks{list-style:none;display:flex;flex-direction:column;gap:11px}
+.wl-perks li{display:flex;align-items:flex-start;gap:10px;font-size:0.86rem;color:var(--text)}
+.chk{color:var(--blue);font-weight:700;flex-shrink:0}
+.count-badge{display:inline-flex;align-items:center;gap:10px;background:var(--blue-ll);border:1px solid var(--border2);border-radius:8px;padding:8px 14px;margin-bottom:20px;font-size:0.76rem;color:var(--text2)}
+.count-badge strong{color:var(--blue);font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:800}
+
+/* ── FORM ── */
+.form-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:34px 30px}
+.form-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;margin-bottom:22px;color:var(--navy);letter-spacing:-0.02em}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.fg label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);font-weight:500;letter-spacing:0.09em;text-transform:uppercase}
+.fg input,.fg select{background:#F8F9FC;border:1px solid var(--border);border-radius:7px;padding:12px 14px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color .2s,background .2s;font-weight:400}
+.fg input:focus,.fg select:focus{border-color:var(--blue);background:#fff}
+.fg input::placeholder{color:var(--text3)}
+.fg select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238892AA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;background-color:#F8F9FC}
+.fg select option{background:#fff;color:var(--navy)}
+.cb{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px;cursor:pointer}
+.cb input[type=checkbox]{width:17px;height:17px;min-width:17px;border:1.5px solid var(--border);border-radius:4px;background:#F8F9FC;appearance:none;-webkit-appearance:none;display:grid;place-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;transition:all .15s}
+.cb input:checked{background:var(--blue);border-color:var(--blue)}
+.cb input:checked::after{content:'';width:4px;height:8px;border:1.5px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
+.cb span{font-size:0.84rem;color:var(--text2);line-height:1.6}
+.cb span strong{color:var(--navy);font-weight:600}
+.submit-btn{width:100%;background:var(--blue);color:#fff;border:none;padding:14px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;cursor:pointer;transition:opacity .2s;letter-spacing:-0.01em}
+.submit-btn:hover:not(:disabled){opacity:.88}
+.submit-btn:disabled{opacity:.5;cursor:not-allowed}
+.form-note{font-family:'JetBrains Mono',monospace;font-size:0.61rem;color:var(--text3);text-align:center;margin-top:12px;letter-spacing:0.04em}
+.form-err{background:#FEF0F2;border:1px solid rgba(229,62,90,0.25);border-radius:7px;padding:10px 14px;font-size:0.82rem;color:var(--err);margin-bottom:14px;display:none;font-family:'Plus Jakarta Sans',sans-serif;font-weight:500}
+
+/* ── SUCCESS ── */
+.success-box{display:none;text-align:center;padding:16px 0}
+.success-icon{font-size:2.8rem;margin-bottom:16px}
+.success-box h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:1.35rem;font-weight:800;margin-bottom:10px;color:var(--navy);letter-spacing:-0.03em}
+.success-box p{color:var(--text2);font-size:0.87rem;line-height:1.65}
+.success-meta{display:flex;flex-direction:column;gap:6px;margin-top:18px;background:var(--blue-ll);border:1px solid var(--border2);border-radius:10px;padding:14px 18px;text-align:left}
+.success-meta span{font-family:'JetBrains Mono',monospace;font-size:0.73rem;color:var(--text2)}
+.success-meta strong{color:var(--navy)}
+
+/* ── FOOTER ── */
+footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fff}
+.foot-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:var(--text2);letter-spacing:-0.03em;cursor:pointer}
+.foot-logo span{color:var(--blue)}
+.foot-p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.04em}
+
+/* ── REVEAL ── */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
+.reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo" onclick="goTo('hero')">Grid<span>loan</span>.ai</div>
+  <div class="nav-links">
+    <a onclick="goTo('value')">Platform</a>
+    <a onclick="goTo('how')">How it works</a>
+    <a onclick="goTo('roadmap')">Roadmap</a>
+    <a onclick="goTo('waitlist')">Waitlist</a>
+  </div>
+  <button class="nav-cta" onclick="goTo('waitlist')">Join Waitlist</button>
+</nav>
+
+<div class="ticker">
+  <div class="ticker-inner" id="ticker"></div>
+</div>
+
+<div class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="badge"><span class="dot"></span>Now accepting early design partners</div>
+  <h1>What Airbnb did for empty bedrooms,<br/><em>we're doing for idle GPU racks.</em></h1>
+  <p class="hero-sub">Gridloan.ai is the decentralised compute marketplace that turns stranded hardware into passive income — and gives every AI team affordable infrastructure to compete.</p>
+  <div class="btns">
+    <button class="btn-p" onclick="goTo('waitlist')">List Your Hardware →</button>
+    <button class="btn-s" onclick="goTo('waitlist')">Access Compute</button>
+  </div>
+  <div class="scroll-hint"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>scroll to explore</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat" onclick="goTo('waitlist')"><div class="stat-n">50%+</div><div class="stat-l">Cost saving vs hyperscalers</div></div>
+  <div class="stat" onclick="goTo('value')"><div class="stat-n">Any</div><div class="stat-l">Hardware accepted</div></div>
+  <div class="stat" onclick="goTo('value')"><div class="stat-n">$0</div><div class="stat-l">Ops overhead for owners</div></div>
+  <div class="stat" onclick="goTo('how')"><div class="stat-n">Global</div><div class="stat-l">Borderless compute pool</div></div>
+</div>
+
+<div id="value"><div class="wrap">
+  <div class="eyebrow reveal">The marketplace</div>
+  <div class="sec-title reveal">Two sides. One network.<br/><em>Everyone wins.</em></div>
+  <div class="two-sided reveal">
+    <div class="side own">
+      <div class="side-tag">For hardware owners</div>
+      <h3>Your idle GPUs should be earning, not gathering dust.</h3>
+      <p>Whether you run an enterprise data centre, colocation facility, or a rack of prosumer GPUs — Gridloan turns spare capacity into recurring income with zero ops overhead.</p>
+      <ul class="blist">
+        <li><span class="arr">→</span>List any GPU, CPU, or TPU in minutes</li>
+        <li><span class="arr">→</span>Set your own pricing floor and availability</li>
+        <li><span class="arr">→</span>Gridloan handles matching, billing, and orchestration</li>
+        <li><span class="arr">→</span>Earn passive income on every compute hour</li>
+      </ul>
+      <button class="side-cta" onclick="goTo('waitlist');setType('Hardware Owner')">List my hardware →</button>
+    </div>
+    <div class="side bld">
+      <div class="side-tag">For AI teams & researchers</div>
+      <h3>Stop letting hyperscaler pricing cap your ambitions.</h3>
+      <p>Access a global pool of vetted compute at a fraction of AWS or GCP prices. No lock-in, no long-term contracts — submit your workload and train.</p>
+      <ul class="blist">
+        <li><span class="arr">→</span>Submit LLM training and fine-tuning via unified API</li>
+        <li><span class="arr">→</span>Scheduler finds optimal global compute automatically</li>
+        <li><span class="arr">→</span>Automatic checkpointing and fault recovery</li>
+        <li><span class="arr">→</span>Pay only for what you use — no minimums</li>
+      </ul>
+      <button class="side-cta" onclick="goTo('waitlist');setType('Compute Consumer')">Access compute →</button>
+    </div>
+  </div>
+</div></div>
+
+<div class="bg-white" id="how"><div class="bg-inner">
+  <div class="eyebrow reveal">How it works</div>
+  <div class="sec-title reveal">From idle rack to running job<br/>in four steps.</div>
+  <div class="steps reveal">
+    <div class="step"><div class="step-n">01</div><h4>Connect Hardware</h4><p>Install the Gridloan agent. Any GPU, CPU, or TPU. Works across CUDA, ROCm, and OpenXLA.</p></div>
+    <div class="step"><div class="step-n">02</div><h4>Set Availability</h4><p>Define your pricing floor, time windows, and workload types. Full control at all times.</p></div>
+    <div class="step"><div class="step-n">03</div><h4>Submit Jobs</h4><p>AI teams submit training runs via unified API. The scheduler finds optimal compute globally.</p></div>
+    <div class="step"><div class="step-n">04</div><h4>Everyone Gets Paid</h4><p>Compute runs. Owners earn. Builders ship faster. Gridloan handles billing and fault recovery end-to-end.</p></div>
+  </div>
+</div></div>
+
+<div id="why"><div class="wrap">
+  <div class="eyebrow reveal">Why Gridloan.ai</div>
+  <div class="sec-title reveal">Built different<br/><em>from day one.</em></div>
+  <div class="why-grid">
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div><h4>Any Hardware</h4><p>NVIDIA H100s, AMD MI300s, TPUs, edge devices — our abstraction layer unifies them all under one surface.</p></div>
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg></div><h4>True Marketplace</h4><p>We connect owners with builders — not resell capacity ourselves. Different economics = different prices.</p></div>
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4>Fault-Tolerant</h4><p>Global compute pool means no single geography bottleneck. Checkpointing keeps your jobs alive.</p></div>
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div><h4>Zero Ops for Owners</h4><p>Connect your hardware. We handle matching, orchestration, billing, and support. Just watch the income arrive.</p></div>
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div><h4>Built for AI Workloads</h4><p>Topology-aware scheduling, tensor parallelism, LoRA fine-tuning, RLHF, RAG — real ML from the ground up.</p></div>
+    <div class="why-card reveal"><div class="why-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h4>No Lock-In, Ever</h4><p>No long-term contracts, no egress traps. Pay by the hour, leave whenever. We earn your business every run.</p></div>
+  </div>
+</div></div>
+
+<div class="bg-white" id="roadmap"><div class="bg-inner">
+  <div class="eyebrow reveal">Roadmap</div>
+  <div class="sec-title reveal">Where we're headed.</div>
+  <div class="roadmap-grid reveal">
+    <div class="phase"><span class="phase-tag">Phase 01</span><div class="phase-month">Months 0–3</div><h4>Validate</h4><ul><li>20+ founder & ML engineer interviews</li><li>Waitlist launch & demand signal</li><li>Prove 50%+ savings threshold</li></ul><div class="milestone">Target: 5 startups say they'd pay</div></div>
+    <div class="phase"><span class="phase-tag">Phase 02</span><div class="phase-month">Months 3–9</div><h4>Launch</h4><ul><li>3–5 paying design partners</li><li>Benchmark teardowns vs AWS spot</li><li>Community presence in ML spaces</li></ul><div class="milestone">Target: $10–50k MRR</div></div>
+    <div class="phase"><span class="phase-tag">Phase 03</span><div class="phase-month">Months 9–18</div><h4>Scale</h4><ul><li>Self-serve free tier with upgrade path</li><li>Hardware partnership programme</li><li>Seed raise on MRR + savings data</li></ul><div class="milestone">Target: $200–500k ARR</div></div>
+  </div>
+  <div class="roadmap-cta reveal">
+    <button class="btn-p" onclick="goTo('waitlist')">Get early access →</button>
+  </div>
+</div></div>
+
+<div class="wl-section" id="waitlist"><div class="wl-inner">
+  <div class="eyebrow reveal">Early access</div>
+  <div class="sec-title reveal">Join the waitlist.<br/><em>Shape the platform.</em></div>
+  <div class="wl-grid reveal">
+    <div class="wl-info">
+      <div class="count-badge"><strong id="total-count">–</strong><span>people on the waitlist</span></div>
+      <h3>Be first in line — whether you own hardware or need compute.</h3>
+      <p>We're onboarding our first wave of design partners. Sign up to get early access, shape the roadmap, and lock in launch pricing before we open to the public.</p>
+      <ul class="wl-perks">
+        <li><span class="chk">✓</span>Priority access ahead of public launch</li>
+        <li><span class="chk">✓</span>Discounted credits during Alpha & Beta</li>
+        <li><span class="chk">✓</span>Direct line to the founding team</li>
+        <li><span class="chk">✓</span>Input on product roadmap and features</li>
+        <li><span class="chk">✓</span>Early revenue opportunity for hardware owners</li>
+      </ul>
+    </div>
+    <div>
+      <div class="form-box" id="form-box">
+        <div class="form-title">Reserve your spot</div>
+        <div id="form-err" class="form-err"></div>
+        <div class="form-row">
+          <div class="fg"><label>Full Name</label><input type="text" id="f-name" placeholder="Alex Johnson" autocomplete="name"/></div>
+          <div class="fg"><label>Email Address</label><input type="email" id="f-email" placeholder="alex@startup.ai" autocomplete="email"/></div>
+        </div>
+        <div class="fg">
+          <label>I am a&hellip;</label>
+          <select id="f-type">
+            <option value="" disabled selected>Select your user type</option>
+            <option value="Hardware Owner">Hardware Owner — I have compute to monetise</option>
+            <option value="Compute Consumer">Compute Consumer — I need GPU access</option>
+            <option value="Both">Both — I own hardware and build AI</option>
+          </select>
+        </div>
+        <label class="cb">
+          <input type="checkbox" id="f-alpha"/>
+          <span><strong>Contact me for Alpha & Beta testing</strong> — I'm happy to try the platform early and provide product feedback.</span>
+        </label>
+        <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">Join the Waitlist →</button>
+        <p class="form-note">No spam · No data selling · Just early access updates</p>
+      </div>
+      <div class="form-box success-box" id="success-box">
+        <div class="success-icon">🎉</div>
+        <h3>You're on the list!</h3>
+        <p>Thanks for signing up. We'll be in touch as we approach launch.</p>
+        <div class="success-meta" id="success-meta"></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<footer>
+  <div class="foot-logo" onclick="goTo('hero')">Grid<span>loan</span>.ai</div>
+  <p class="foot-p">hello@gridloan.ai</p>
+  <p class="foot-p">© 2026 Gridloan.ai · Built for builders. Powered by everyone.</p>
+</footer>
+
+<script>
+// ── CONFIG — update to your Railway URL before deploying ────────────────────
+const API_BASE = 'http://localhost:3001/api';
+
+function goTo(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function setType(val) {
+  setTimeout(() => { document.getElementById('f-type').value = val; }, 400);
+}
+
+// ── Ticker ───────────────────────────────────────────────────────────────────
+const ticks = [
+  ['GL-001','H100 x8 — Listed','$2.10/hr'],['GL-002','MI300 x4 — Active','$1.40/hr'],
+  ['GL-003','LLM Training Job','Queued'],['GL-004','TPU v4 x16 — Listed','$3.80/hr'],
+  ['GL-005','LoRA Fine-tune','Running'],['GL-006','A100 x2 — Active','$0.90/hr'],
+  ['GL-007','RLHF Reward Model','Running'],['GL-008','RTX 4090 x8 — Listed','$0.60/hr'],
+  ['GL-001','H100 x8 — Listed','$2.10/hr'],['GL-002','MI300 x4 — Active','$1.40/hr'],
+  ['GL-003','LLM Training Job','Queued'],['GL-004','TPU v4 x16 — Listed','$3.80/hr'],
+  ['GL-005','LoRA Fine-tune','Running'],['GL-006','A100 x2 — Active','$0.90/hr'],
+  ['GL-007','RLHF Reward Model','Running'],['GL-008','RTX 4090 x8 — Listed','$0.60/hr'],
+];
+const tk = document.getElementById('ticker');
+ticks.forEach(([id, label, val]) => {
+  const el = document.createElement('span');
+  el.className = 'tick-item';
+  el.innerHTML = `<span>${id}</span>${label} — <span>${val}</span>`;
+  tk.appendChild(el);
+});
+
+// ── Load count from API ───────────────────────────────────────────────────────
+async function loadCount() {
+  try {
+    const res  = await fetch(`${API_BASE}/waitlist/count`);
+    const data = await res.json();
+    document.getElementById('total-count').textContent =
+      data.success && data.count > 0 ? data.count : '—';
+  } catch {
+    document.getElementById('total-count').textContent = '—';
+  }
+}
+
+// ── Form submission ───────────────────────────────────────────────────────────
+async function handleSubmit() {
+  const name  = document.getElementById('f-name').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const type  = document.getElementById('f-type').value;
+  const alpha = document.getElementById('f-alpha').checked;
+  const btn   = document.getElementById('submit-btn');
+  const errEl = document.getElementById('form-err');
+
+  errEl.style.display = 'none';
+  ['f-name','f-email','f-type'].forEach(id => {
+    document.getElementById(id).style.borderColor = '';
+  });
+
+  let hasErr = false;
+  if (!name)  { document.getElementById('f-name').style.borderColor  = '#E53E5A'; hasErr = true; }
+  if (!email || !email.includes('@')) { document.getElementById('f-email').style.borderColor = '#E53E5A'; hasErr = true; }
+  if (!type)  { document.getElementById('f-type').style.borderColor  = '#E53E5A'; hasErr = true; }
+  if (hasErr) { errEl.textContent = 'Please fill in all required fields.'; errEl.style.display = 'block'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving your spot…';
+
+  try {
+    const res  = await fetch(`${API_BASE}/waitlist`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName: name, email, userType: type, alphaBetaOptin: alpha }),
+    });
+    const data = await res.json();
+
+    if (!data.success) {
+      btn.disabled = false;
+      btn.textContent = 'Join the Waitlist →';
+      errEl.textContent = data.error || 'Something went wrong — please try again.';
+      errEl.style.display = 'block';
+      return;
+    }
+
+    document.getElementById('total-count').textContent = data.totalCount;
+    document.getElementById('form-box').style.display    = 'none';
+    document.getElementById('success-box').style.display = 'block';
+    const typeMap = { 'Hardware Owner': 'Hardware Owner', 'Compute Consumer': 'Compute Consumer', Both: 'Both' };
+    document.getElementById('success-meta').innerHTML =
+      `<span><strong>${data.data.fullName}</strong></span>` +
+      `<span>${data.data.email}</span>` +
+      `<span>${typeMap[data.data.userType] || data.data.userType}</span>` +
+      (data.data.alphaBetaOptin ? `<span style="color:var(--blue)">✓ Alpha & Beta opt-in confirmed</span>` : '');
+
+  } catch {
+    btn.disabled = false;
+    btn.textContent = 'Join the Waitlist →';
+    errEl.textContent = 'Network error — please check your connection and try again.';
+    errEl.style.display = 'block';
+  }
+}
+
+// ── Scroll reveal ─────────────────────────────────────────────────────────────
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('in'), i * 70);
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+loadCount();
+</script>
+</body>
+</html>
