@@ -532,37 +532,53 @@ async function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Saving your spot…';
 
+  function showErr(msg) {
+    btn.disabled = false;
+    btn.textContent = 'Join the Waitlist →';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+  }
+
   try {
-    const res  = await fetch(`${API_BASE}/waitlist`, {
+    const res = await fetch(`${API_BASE}/waitlist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fullName: name, email, userType: type, alphaBetaOptin: alpha }),
     });
-    const data = await res.json();
 
-    if (!data.success) {
-      btn.disabled = false;
-      btn.textContent = 'Join the Waitlist →';
-      errEl.textContent = data.error || 'Something went wrong — please try again.';
-      errEl.style.display = 'block';
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      showErr('Server error — please try again in a moment.');
       return;
     }
 
-    document.getElementById('total-count').textContent = data.totalCount;
-    document.getElementById('form-box').style.display    = 'none';
-    document.getElementById('success-box').style.display = 'block';
-    const typeMap = { 'Hardware Owner': 'Hardware Owner', 'Compute Consumer': 'Compute Consumer', Both: 'Both' };
-    document.getElementById('success-meta').innerHTML =
-      `<span><strong>${data.data.fullName}</strong></span>` +
-      `<span>${data.data.email}</span>` +
-      `<span>${typeMap[data.data.userType] || data.data.userType}</span>` +
-      (data.data.alphaBetaOptin ? `<span style="color:var(--blue)">✓ Alpha & Beta opt-in confirmed</span>` : '');
+    if (!data.success) {
+      // validation middleware returns { errors: [...] }, other errors return { error: '...' }
+      const msg = data.error
+        || (Array.isArray(data.errors) ? data.errors[0] : null)
+        || 'Something went wrong — please try again.';
+      showErr(msg);
+      return;
+    }
 
-  } catch {
-    btn.disabled = false;
-    btn.textContent = 'Join the Waitlist →';
-    errEl.textContent = 'Network error — please check your connection and try again.';
-    errEl.style.display = 'block';
+    // ── Success ──
+    if (data.totalCount) document.getElementById('total-count').textContent = data.totalCount;
+    document.getElementById('form-box').style.display  = 'none';
+    const successBox = document.getElementById('success-box');
+    successBox.style.display = 'block';
+    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const typeLabels = { 'Hardware Owner': 'Hardware Owner', 'Compute Consumer': 'Compute Consumer', Both: 'Both' };
+    document.getElementById('success-meta').innerHTML =
+      `<span>📛 <strong>${data.data.fullName}</strong></span>` +
+      `<span>✉️ ${data.data.email}</span>` +
+      `<span>🏷 ${typeLabels[data.data.userType] || data.data.userType}</span>` +
+      (data.data.alphaBetaOptin ? `<span style="color:var(--blue)">✓ Alpha & Beta testing opt-in confirmed</span>` : '');
+
+  } catch (err) {
+    showErr(err && err.message ? err.message : 'Network error — please check your connection and try again.');
   }
 }
 
