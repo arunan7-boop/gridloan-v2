@@ -447,8 +447,7 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 </footer>
 
 <script>
-// ── CONFIG — update to your Railway URL before deploying ────────────────────
-const API_BASE = '/api';
+const API_BASE = window.location.origin + '/api';
 function goTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
