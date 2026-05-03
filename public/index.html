@@ -176,8 +176,8 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 .nav-ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-ham.open span:nth-child(2){opacity:0}
 .nav-ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
-.nav-drawer{display:none;position:fixed;top:57px;left:0;right:0;background:rgba(216,222,240,0.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:8px 24px 20px;flex-direction:column;z-index:199}
-.nav-drawer.open{display:flex}
+.nav-drawer{display:flex;flex-direction:column;position:fixed;top:57px;left:0;right:0;background:rgba(216,222,240,0.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:8px 24px 20px;z-index:199;visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .18s ease,transform .18s ease,visibility .18s;pointer-events:none}
+.nav-drawer.open{visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
 .nav-drawer a{font-size:0.9rem;color:var(--text2);text-decoration:none;font-weight:500;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;letter-spacing:-0.01em;transition:color .2s}
 .nav-drawer a:hover{color:var(--blue)}
 .nav-drawer-cta{margin-top:14px;background:var(--blue);color:#fff;border:none;padding:13px;border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;width:100%;letter-spacing:-0.01em;transition:opacity .2s}
@@ -235,6 +235,44 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
   .sec-title{margin-bottom:24px}
   footer{flex-direction:column;text-align:center;padding:24px 20px;gap:8px}
   .nav-drawer{top:53px}
+}
+
+/* ── LANDSCAPE PHONES (short viewports) ── */
+@media(max-height:500px) and (orientation:landscape){
+  .hero{min-height:auto;padding:80px 20px 40px}
+  .hero h1{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:12px}
+  .hero-sub{font-size:0.88rem;margin-bottom:20px}
+  .scroll-hint{display:none}
+  .stats-bar{grid-template-columns:repeat(4,1fr)}
+  .stat:nth-child(2){border-right:1px solid var(--border)}
+  .stat:nth-child(3){border-top:none}
+  .stat:nth-child(4){border-top:none}
+}
+
+/* ── TINY SCREENS (≤360px) ── */
+@media(max-width:360px){
+  nav,.nav-drawer{padding-left:16px;padding-right:16px}
+  .wrap,.bg-inner,.wl-inner{padding-left:16px;padding-right:16px}
+  .side,.form-box{padding-left:16px;padding-right:16px}
+  .stat-n{font-size:1.4rem}
+  footer{padding-left:16px;padding-right:16px}
+}
+
+/* ── iOS SAFE AREAS (notch / home bar) ── */
+@supports(padding:env(safe-area-inset-bottom)){
+  nav{
+    padding-left:max(20px,env(safe-area-inset-left));
+    padding-right:max(20px,env(safe-area-inset-right));
+  }
+  .nav-drawer{
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
+  footer{
+    padding-bottom:max(24px,env(safe-area-inset-bottom));
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
 }
 </style>
 </head>
@@ -420,13 +458,25 @@ function setType(val) {
 function toggleNav() {
   const ham = document.getElementById('nav-ham');
   const drawer = document.getElementById('nav-drawer');
-  ham.classList.toggle('open');
+  const isOpen = ham.classList.toggle('open');
   drawer.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
 }
 function closeNav() {
   document.getElementById('nav-ham').classList.remove('open');
   document.getElementById('nav-drawer').classList.remove('open');
+  document.body.style.overflow = '';
 }
+document.addEventListener('click', e => {
+  const drawer = document.getElementById('nav-drawer');
+  const ham = document.getElementById('nav-ham');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !ham.contains(e.target)) {
+    closeNav();
+  }
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeNav();
+});
 
 // ── Ticker ───────────────────────────────────────────────────────────────────
 const ticks = [
