@@ -8,19 +8,19 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F4F6FB;--bg2:#ECEFF7;--bg3:#FFFFFF;
+  --bg:#DDE2EF;--bg2:#D2D8E9;--bg3:#E8ECFA;
   --navy:#0F1C3F;--navy2:#1A2E5A;
-  --blue:#0066FF;--blue-l:rgba(0,102,255,0.1);--blue-ll:rgba(0,102,255,0.06);
+  --blue:#0066FF;--blue-l:rgba(0,102,255,0.12);--blue-ll:rgba(0,102,255,0.08);
   --purple:#6C5CE7;
-  --text:#0F1C3F;--text2:#4A5578;--text3:#8892AA;
-  --card:#FFFFFF;--border:rgba(15,28,63,0.1);--border2:rgba(0,102,255,0.2);
+  --text:#0F1C3F;--text2:#4A5578;--text3:#7A849E;
+  --card:#EAEEFC;--border:rgba(15,28,63,0.13);--border2:rgba(0,102,255,0.22);
   --err:#E53E5A;--cyan:#00C2FF;
 }
 html{scroll-behavior:smooth}
 body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
 
 /* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(255,255,255,0.95);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:16px 56px;background:rgba(220,226,242,0.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}
 .logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.3rem;letter-spacing:-0.04em;color:var(--navy);cursor:pointer}
 .logo span{color:var(--blue)}
 .nav-links{display:flex;gap:28px}
@@ -48,14 +48,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
 .btn-p{background:var(--blue);color:#fff;border:none;padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.93rem;cursor:pointer;transition:opacity .2s;letter-spacing:-0.01em}
 .btn-p:hover{opacity:.88}
-.btn-s{background:#fff;color:var(--navy);border:1px solid var(--border);padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.93rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:-0.01em}
+.btn-s{background:var(--bg3);color:var(--navy);border:1px solid var(--border);padding:14px 30px;border-radius:8px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;font-size:0.93rem;cursor:pointer;transition:border-color .2s,color .2s;letter-spacing:-0.01em}
 .btn-s:hover{border-color:var(--blue);color:var(--blue)}
 .scroll-hint{display:flex;align-items:center;gap:6px;justify-content:center;margin-top:20px;font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.05em;animation:bounceY 2s infinite;position:relative;z-index:1}
 @keyframes bounceY{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
 .scroll-hint svg{width:12px;height:12px;stroke:var(--text3);fill:none;stroke-width:1.5;stroke-linecap:round}
 
 /* ── STATS ── */
-.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.stats-bar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .stat{padding:26px 16px;text-align:center;border-right:1px solid var(--border);cursor:pointer;transition:background .2s}
 .stat:hover{background:var(--blue-ll)}
 .stat:last-child{border-right:none}
@@ -64,7 +64,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 
 /* ── SECTIONS ── */
 .wrap{padding:80px 60px;max-width:1200px;margin:0 auto}
-.bg-white{background:#fff;padding:80px 0}
+.bg-white{background:var(--card);padding:80px 0}
 .bg-inner{max-width:1200px;margin:0 auto;padding:0 60px}
 .eyebrow{font-family:'JetBrains Mono',monospace;font-size:0.66rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;font-weight:500}
 .sec-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(1.6rem,3vw,2.2rem);font-weight:800;letter-spacing:-0.035em;line-height:1.12;margin-bottom:32px;color:var(--navy)}
@@ -129,18 +129,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .count-badge strong{color:var(--blue);font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:800}
 
 /* ── FORM ── */
-.form-box{background:#fff;border:1px solid var(--border);border-radius:14px;padding:34px 30px}
+.form-box{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:34px 30px}
 .form-title{font-family:'Plus Jakarta Sans',sans-serif;font-size:1rem;font-weight:700;margin-bottom:22px;color:var(--navy);letter-spacing:-0.02em}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 .fg{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
 .fg label{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);font-weight:500;letter-spacing:0.09em;text-transform:uppercase}
-.fg input,.fg select{background:#F8F9FC;border:1px solid var(--border);border-radius:7px;padding:12px 14px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color .2s,background .2s;font-weight:400}
-.fg input:focus,.fg select:focus{border-color:var(--blue);background:#fff}
+.fg input,.fg select{background:#D5DBF0;border:1px solid var(--border);border-radius:7px;padding:12px 14px;color:var(--navy);font-family:'Plus Jakarta Sans',sans-serif;font-size:0.88rem;outline:none;width:100%;transition:border-color .2s,background .2s;font-weight:400}
+.fg input:focus,.fg select:focus{border-color:var(--blue);background:var(--bg3)}
 .fg input::placeholder{color:var(--text3)}
-.fg select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238892AA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;background-color:#F8F9FC}
+.fg select{appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238892AA' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:34px;background-color:#D5DBF0}
 .fg select option{background:#fff;color:var(--navy)}
 .cb{display:flex;align-items:flex-start;gap:12px;margin-bottom:22px;cursor:pointer}
-.cb input[type=checkbox]{width:17px;height:17px;min-width:17px;border:1.5px solid var(--border);border-radius:4px;background:#F8F9FC;appearance:none;-webkit-appearance:none;display:grid;place-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;transition:all .15s}
+.cb input[type=checkbox]{width:17px;height:17px;min-width:17px;border:1.5px solid var(--border);border-radius:4px;background:#D5DBF0;appearance:none;-webkit-appearance:none;display:grid;place-content:center;cursor:pointer;margin-top:2px;flex-shrink:0;transition:all .15s}
 .cb input:checked{background:var(--blue);border-color:var(--blue)}
 .cb input:checked::after{content:'';width:4px;height:8px;border:1.5px solid #fff;border-top:none;border-left:none;transform:rotate(45deg) translate(-1px,-1px)}
 .cb span{font-size:0.84rem;color:var(--text2);line-height:1.6}
@@ -161,7 +161,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:cen
 .success-meta strong{color:var(--navy)}
 
 /* ── FOOTER ── */
-footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:#fff}
+footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;background:var(--card)}
 .foot-logo{font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:1.05rem;color:var(--text2);letter-spacing:-0.03em;cursor:pointer}
 .foot-logo span{color:var(--blue)}
 .foot-p{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3);letter-spacing:0.04em}
@@ -169,6 +169,111 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 /* ── REVEAL ── */
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .65s ease,transform .65s ease}
 .reveal.in{opacity:1;transform:translateY(0)}
+
+/* ── HAMBURGER ── */
+.nav-ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--navy);border-radius:2px;transition:transform .2s,opacity .2s}
+.nav-ham.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-ham.open span:nth-child(2){opacity:0}
+.nav-ham.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.nav-drawer{display:flex;flex-direction:column;position:fixed;top:57px;left:0;right:0;background:rgba(216,222,240,0.98);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);padding:8px 24px 20px;z-index:199;visibility:hidden;opacity:0;transform:translateY(-6px);transition:opacity .18s ease,transform .18s ease,visibility .18s;pointer-events:none}
+.nav-drawer.open{visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
+.nav-drawer a{font-size:0.9rem;color:var(--text2);text-decoration:none;font-weight:500;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;letter-spacing:-0.01em;transition:color .2s}
+.nav-drawer a:hover{color:var(--blue)}
+.nav-drawer-cta{margin-top:14px;background:var(--blue);color:#fff;border:none;padding:13px;border-radius:7px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;width:100%;letter-spacing:-0.01em;transition:opacity .2s}
+.nav-drawer-cta:hover{opacity:.88}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:14px 28px}
+  .nav-links,.nav-cta{display:none}
+  .nav-ham{display:flex}
+  .ticker{margin-top:57px}
+
+  .stats-bar{grid-template-columns:repeat(2,1fr)}
+  .stat:nth-child(2){border-right:none}
+  .stat:nth-child(3){border-top:1px solid var(--border)}
+  .stat:nth-child(4){border-top:1px solid var(--border)}
+
+  .wrap{padding:60px 28px}
+  .bg-white{padding:60px 0}
+  .bg-inner{padding:0 28px}
+  .wl-inner{padding:0 28px}
+
+  .two-sided{grid-template-columns:1fr}
+  .steps{grid-template-columns:repeat(2,1fr)}
+  .why-grid{grid-template-columns:repeat(2,1fr)}
+  .roadmap-grid{grid-template-columns:1fr}
+  .wl-grid{grid-template-columns:1fr;gap:40px}
+  footer{padding:28px 28px;flex-wrap:wrap;gap:10px}
+}
+
+@media(max-width:600px){
+  nav{padding:14px 20px}
+  .ticker{margin-top:53px}
+
+  .hero{padding:76px 20px 56px}
+  .hero h1{font-size:clamp(1.9rem,8vw,2.8rem)}
+  .hero-sub{font-size:0.93rem}
+  .btns{flex-direction:column;align-items:stretch}
+  .btn-p,.btn-s{text-align:center}
+
+  .stat{padding:20px 10px}
+  .stat-n{font-size:1.6rem}
+
+  .wrap{padding:48px 20px}
+  .bg-white{padding:48px 0}
+  .bg-inner{padding:0 20px}
+  .wl-section{padding:48px 0}
+  .wl-inner{padding:0 20px}
+
+  .side{padding:30px 22px}
+  .steps{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+
+  .sec-title{margin-bottom:24px}
+  footer{flex-direction:column;text-align:center;padding:24px 20px;gap:8px}
+  .nav-drawer{top:53px}
+}
+
+/* ── LANDSCAPE PHONES (short viewports) ── */
+@media(max-height:500px) and (orientation:landscape){
+  .hero{min-height:auto;padding:80px 20px 40px}
+  .hero h1{font-size:clamp(1.5rem,5vw,2rem);margin-bottom:12px}
+  .hero-sub{font-size:0.88rem;margin-bottom:20px}
+  .scroll-hint{display:none}
+  .stats-bar{grid-template-columns:repeat(4,1fr)}
+  .stat:nth-child(2){border-right:1px solid var(--border)}
+  .stat:nth-child(3){border-top:none}
+  .stat:nth-child(4){border-top:none}
+}
+
+/* ── TINY SCREENS (≤360px) ── */
+@media(max-width:360px){
+  nav,.nav-drawer{padding-left:16px;padding-right:16px}
+  .wrap,.bg-inner,.wl-inner{padding-left:16px;padding-right:16px}
+  .side,.form-box{padding-left:16px;padding-right:16px}
+  .stat-n{font-size:1.4rem}
+  footer{padding-left:16px;padding-right:16px}
+}
+
+/* ── iOS SAFE AREAS (notch / home bar) ── */
+@supports(padding:env(safe-area-inset-bottom)){
+  nav{
+    padding-left:max(20px,env(safe-area-inset-left));
+    padding-right:max(20px,env(safe-area-inset-right));
+  }
+  .nav-drawer{
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
+  footer{
+    padding-bottom:max(24px,env(safe-area-inset-bottom));
+    padding-left:max(24px,env(safe-area-inset-left));
+    padding-right:max(24px,env(safe-area-inset-right));
+  }
+}
 </style>
 </head>
 <body>
@@ -182,7 +287,17 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
     <a onclick="goTo('waitlist')">Waitlist</a>
   </div>
   <button class="nav-cta" onclick="goTo('waitlist')">Join Waitlist</button>
+  <button class="nav-ham" id="nav-ham" onclick="toggleNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-drawer" id="nav-drawer">
+  <a onclick="goTo('value');closeNav()">Platform</a>
+  <a onclick="goTo('how');closeNav()">How it works</a>
+  <a onclick="goTo('roadmap');closeNav()">Roadmap</a>
+  <a onclick="goTo('waitlist');closeNav()">Waitlist</a>
+  <button class="nav-drawer-cta" onclick="goTo('waitlist');closeNav()">Join Waitlist</button>
+</div>
 
 <div class="ticker">
   <div class="ticker-inner" id="ticker"></div>
@@ -333,14 +448,35 @@ footer{padding:36px 60px;border-top:1px solid var(--border);display:flex;align-i
 
 <script>
 // ── CONFIG — update to your Railway URL before deploying ────────────────────
-// public/index.html — find this line and update it
-const API_BASE = 'https://gridloan-v2-production.up.railway.app/api';
+const API_BASE = '/api';
 function goTo(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function setType(val) {
   setTimeout(() => { document.getElementById('f-type').value = val; }, 400);
 }
+function toggleNav() {
+  const ham = document.getElementById('nav-ham');
+  const drawer = document.getElementById('nav-drawer');
+  const isOpen = ham.classList.toggle('open');
+  drawer.classList.toggle('open');
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeNav() {
+  document.getElementById('nav-ham').classList.remove('open');
+  document.getElementById('nav-drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('click', e => {
+  const drawer = document.getElementById('nav-drawer');
+  const ham = document.getElementById('nav-ham');
+  if (drawer.classList.contains('open') && !drawer.contains(e.target) && !ham.contains(e.target)) {
+    closeNav();
+  }
+});
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900) closeNav();
+});
 
 // ── Ticker ───────────────────────────────────────────────────────────────────
 const ticks = [
@@ -396,37 +532,53 @@ async function handleSubmit() {
   btn.disabled = true;
   btn.textContent = 'Saving your spot…';
 
+  function showErr(msg) {
+    btn.disabled = false;
+    btn.textContent = 'Join the Waitlist →';
+    errEl.textContent = msg;
+    errEl.style.display = 'block';
+  }
+
   try {
-    const res  = await fetch(`${API_BASE}/waitlist`, {
+    const res = await fetch(`${API_BASE}/waitlist`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ fullName: name, email, userType: type, alphaBetaOptin: alpha }),
     });
-    const data = await res.json();
 
-    if (!data.success) {
-      btn.disabled = false;
-      btn.textContent = 'Join the Waitlist →';
-      errEl.textContent = data.error || 'Something went wrong — please try again.';
-      errEl.style.display = 'block';
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      showErr('Server error — please try again in a moment.');
       return;
     }
 
-    document.getElementById('total-count').textContent = data.totalCount;
-    document.getElementById('form-box').style.display    = 'none';
-    document.getElementById('success-box').style.display = 'block';
-    const typeMap = { 'Hardware Owner': 'Hardware Owner', 'Compute Consumer': 'Compute Consumer', Both: 'Both' };
-    document.getElementById('success-meta').innerHTML =
-      `<span><strong>${data.data.fullName}</strong></span>` +
-      `<span>${data.data.email}</span>` +
-      `<span>${typeMap[data.data.userType] || data.data.userType}</span>` +
-      (data.data.alphaBetaOptin ? `<span style="color:var(--blue)">✓ Alpha & Beta opt-in confirmed</span>` : '');
+    if (!data.success) {
+      // validation middleware returns { errors: [...] }, other errors return { error: '...' }
+      const msg = data.error
+        || (Array.isArray(data.errors) ? data.errors[0] : null)
+        || 'Something went wrong — please try again.';
+      showErr(msg);
+      return;
+    }
 
-  } catch {
-    btn.disabled = false;
-    btn.textContent = 'Join the Waitlist →';
-    errEl.textContent = 'Network error — please check your connection and try again.';
-    errEl.style.display = 'block';
+    // ── Success ──
+    if (data.totalCount) document.getElementById('total-count').textContent = data.totalCount;
+    document.getElementById('form-box').style.display  = 'none';
+    const successBox = document.getElementById('success-box');
+    successBox.style.display = 'block';
+    successBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+    const typeLabels = { 'Hardware Owner': 'Hardware Owner', 'Compute Consumer': 'Compute Consumer', Both: 'Both' };
+    document.getElementById('success-meta').innerHTML =
+      `<span>📛 <strong>${data.data.fullName}</strong></span>` +
+      `<span>✉️ ${data.data.email}</span>` +
+      `<span>🏷 ${typeLabels[data.data.userType] || data.data.userType}</span>` +
+      (data.data.alphaBetaOptin ? `<span style="color:var(--blue)">✓ Alpha & Beta testing opt-in confirmed</span>` : '');
+
+  } catch (err) {
+    showErr(err && err.message ? err.message : 'Network error — please check your connection and try again.');
   }
 }
 

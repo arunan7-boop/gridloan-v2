@@ -28,7 +28,11 @@ const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
 
 app.use(cors({
   origin: (origin, cb) => {
-    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    // No origin = same-origin request or server-to-server — always allow
+    if (!origin) return cb(null, true);
+    // No allowlist configured = allow all (single-server Railway setup)
+    if (allowedOrigins.length === 0) return cb(null, true);
+    if (allowedOrigins.includes(origin)) return cb(null, true);
     cb(new Error(`CORS blocked: ${origin}`));
   },
   methods: ['GET', 'POST'],
